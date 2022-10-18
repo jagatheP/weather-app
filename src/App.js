@@ -1,12 +1,13 @@
 import UilReact from '@iconscout/react-unicons/icons/uil-react';
+import ApplicationContainer from './components/ApplicationContainer';
+import Header from './components/Header';
 
 function App() {
   return (
-    <div class='text-center'>
-      <UilReact size='50' color='#61DAFB' className='display: inline' />
-      <h1 className='text-3xl display: inline font-bold underline'>
-        Hello world!
-      </h1>
+    <div class='w-full h-full min-h-screen bg-gradient-to-br from-cyan-700 to-blue-700'>
+      <ApplicationContainer>
+        <Header />
+      </ApplicationContainer>
     </div>
   );
 }
