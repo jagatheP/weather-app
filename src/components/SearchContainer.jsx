@@ -7,7 +7,7 @@ function SearchContainer() {
       <input
         type='text'
         placeholder='Search...'
-        className='text-xl font-light p-2 w-1/2 shadow-xl focus:outline-none capitalize placeholder:lowercase'
+        className='text-xl font-light p-2 w-1/2 shadow-xl rounded-md focus:outline-none capitalize placeholder:lowercase'
       />
       <UilSearch
         size={25}

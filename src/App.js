@@ -2,6 +2,8 @@ import UilReact from '@iconscout/react-unicons/icons/uil-react';
 import ApplicationContainer from './components/ApplicationContainer';
 import Header from './components/Header';
 import SearchContainer from './components/SearchContainer';
+import LocationContainer from './components/LocationContainer';
+import ForecastDetails from './components/ForecastDetails';
 
 function App() {
   return (
@@ -9,6 +11,8 @@ function App() {
       <ApplicationContainer>
         <Header />
         <SearchContainer />
+        <LocationContainer />
+        <ForecastDetails />
       </ApplicationContainer>
     </div>
   );
