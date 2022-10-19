@@ -4,6 +4,7 @@ import Header from './components/Header';
 import SearchContainer from './components/SearchContainer';
 import LocationContainer from './components/LocationContainer';
 import ForecastDetails from './components/ForecastDetails';
+import DailyForecast from './components/DailyForecastContainer';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <SearchContainer />
         <LocationContainer />
         <ForecastDetails />
+        <DailyForecast />
       </ApplicationContainer>
     </div>
   );
