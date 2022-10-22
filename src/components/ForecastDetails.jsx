@@ -23,7 +23,7 @@ function ForecastDetails() {
         <div className='text-center text-6xl'>{`32°`}</div>
         <p className='text-center py-2 text-xl text-cyan-300'>Cloudy</p>
       </div>
-      <div className='space-y-2 mt-3 lg:mt-0'>
+      <div className='space-y-2 mt-3 md:mt-0'>
         <div className='flex font-light text-sm items-center justify-center'>
           <UilTemperature size={18} className='mr-1' />
           Real fell:
