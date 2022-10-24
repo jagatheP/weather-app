@@ -9,8 +9,10 @@ function SearchContainer({ setCurrentLocation }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLocation('');
-    dispatch({ type: SET_LOCATION, payload: { location } });
+    if (location) {
+      setLocation('');
+      dispatch({ type: SET_LOCATION, payload: { location } });
+    }
   };
 
   return (
