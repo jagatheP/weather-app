@@ -1,68 +1,50 @@
 import axios from 'axios';
 import { DateTime } from 'luxon';
-
-const API_KEY = '483a45dc79329fd119ebecf7bc77d71f';
-const BASE_URL = 'https://api.openweathermap.org/data/2.5';
-
-//https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04
-// &exclude=current,minutely,hourly&units=metric&appid=483a45dc79329fd119ebecf7bc77d71f
+import { v4 as uuidv4 } from 'uuid';
 
 const getWeatherData = (infoType, searchParams) => {
-  const url = BASE_URL + '/' + infoType;
+  const url = process.env.REACT_APP_BASE_URL + '/' + infoType;
 
-  return axios.get(url, { params: { ...searchParams, appid: API_KEY } });
+  return axios.get(url, {
+    params: { ...searchParams, appid: process.env.REACT_APP_API_KEY },
+  });
 };
 
 const formatCurrentWeather = ({ data }) => {
   const {
     coord: { lat, lon },
-    main: {
-      temp,
-      feels_like,
-      temp_min,
-      temp_max,
-      humidity,
-      pressure,
-      sea_level,
-    },
     name,
     dt,
-    sys: { country, sunrise, sunset },
-    weather,
-    wind: { speed },
+    sys: { country },
   } = data;
-
-  const { main: details, icon } = weather[0];
 
   return {
     lat,
     lon,
-    temp,
-    feels_like,
-    temp_min,
-    temp_max,
-    humidity,
-    pressure,
-    sea_level,
     name,
-    dt,
     country,
-    sunrise,
-    sunset,
-    details,
-    icon,
-    speed,
+    dt,
   };
 };
 
 const formatForecastWeather = ({ data }) => {
-  console.log(data);
   let { timezone, daily } = data;
 
   daily = daily.slice(0, 8).map((d) => {
     return {
-      title: formatToLocalTime(d.dt, timezone, 'ccc'),
+      id: uuidv4(),
+      title: formatToLocalTime(d.dt, timezone, 'ccc dd'),
       temp: d.temp.day,
+      temp_max: d.temp.max,
+      temp_min: d.temp.min,
+      sunrise: d.sunrise,
+      sunset: d.sunset,
+      feels_like: d.feels_like.day,
+      humidity: d.humidity,
+      pressure: d.pressure,
+      dt: d.dt,
+      wind_speed: d.wind_speed,
+      main: d.weather[0].main,
       icon: d.weather[0].icon,
     };
   });
@@ -71,28 +53,28 @@ const formatForecastWeather = ({ data }) => {
 };
 
 const getFormattedWeatherData = async (searchParams) => {
-  const formattedCurrentWeather = await getWeatherData(
-    'weather',
-    searchParams
-  ).then(formatCurrentWeather);
+  try {
+    const formattedCurrentWeather = await getWeatherData(
+      'weather',
+      searchParams
+    ).then(formatCurrentWeather);
 
-  const { lat, lon } = formattedCurrentWeather;
+    const { lat, lon } = formattedCurrentWeather;
 
-  const formattedForecastWeather = await getWeatherData('onecall', {
-    lat,
-    lon,
-    exclude: 'current,minutely,alerts',
-    units: searchParams.units,
-  }).then(formatForecastWeather);
-
-  return { ...formattedCurrentWeather, formattedForecastWeather };
+    const formattedForecastWeather = await getWeatherData('onecall', {
+      lat,
+      lon,
+      units: searchParams.units,
+      exclude: 'current,minutely,hourly,alerts',
+    }).then(formatForecastWeather);
+    return { ...formattedCurrentWeather, ...formattedForecastWeather };
+  } catch (error) {
+    return { error: 'Something went wrong. Please try again.' };
+  }
 };
 
-const formatToLocalTime = (
-  secs,
-  zone,
-  format = "cccc, dd LLL yyyy' | Local time: 'hh:mm a"
-) => DateTime.fromSeconds(secs).setZone(zone).toFormat(format);
+const formatToLocalTime = (secs, zone, format = 'cccc, dd LLL yyyy') =>
+  DateTime.fromSeconds(secs).setZone(zone).toFormat(format);
 
 const iconUrlFromCode = (code) =>
   `http://openweathermap.org/img/wn/${code}@2x.png`;
