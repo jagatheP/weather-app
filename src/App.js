@@ -35,7 +35,7 @@ function App() {
               const lon = position.coords.longitude;
               dispatch({ type: SET_CURRENT_LOCATION, payload: [lat, lon] });
             });
-          } else if (result.state === 'denied') {
+          } else {
             toast('Please allow your browser to access your location');
           }
         });
