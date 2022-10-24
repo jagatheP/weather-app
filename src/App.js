@@ -29,7 +29,6 @@ function App() {
         .query({ name: 'geolocation' })
         .then(function (result) {
           if (result.state === 'granted') {
-            console.log(result);
             navigator.geolocation.getCurrentPosition((position) => {
               const lat = position.coords.latitude;
               const lon = position.coords.longitude;
