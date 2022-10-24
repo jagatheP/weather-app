@@ -35,7 +35,7 @@ function App() {
               dispatch({ type: SET_CURRENT_LOCATION, payload: [lat, lon] });
             });
           } else {
-            toast('Please allow your browser to access your location');
+            toast.info('Please allow your browser to access your location');
           }
         });
     }
@@ -51,7 +51,7 @@ function App() {
       const data = await getFormattedWeatherData(searchParams);
       if (data?.error) {
         dispatch({ type: SET_ERROR, payload: { error: data.error } });
-        toast(data.error);
+        toast.error(data.error);
       } else {
         dispatch({ type: GET_FORECAST_SUCCESS, payload: data });
       }
