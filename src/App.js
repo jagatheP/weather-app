@@ -1,15 +1,14 @@
+import { useEffect, useReducer, createContext, useCallback } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import LoadingIcons from 'react-loading-icons';
 import ApplicationContainer from './components/ApplicationContainer';
 import Header from './components/Header';
 import SearchContainer from './components/SearchContainer';
 import LocationContainer from './components/LocationContainer';
 import ForecastDetails from './components/ForecastDetails';
 import DailyForecast from './components/DailyForecastContainer';
-import { useEffect, useReducer, createContext, useCallback } from 'react';
 import getFormattedWeatherData from './services/forecastService';
 import Information from './components/Information';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import LoadingIcons from 'react-loading-icons';
 import forecastReducer, { initialState } from './reducers/forecastReducer';
 import {
   SET_CURRENT_LOCATION,
@@ -17,6 +16,7 @@ import {
   SET_ERROR,
   GET_FORECAST_SUCCESS,
 } from './actions/actionTypes';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const forecastContext = createContext(null);
 

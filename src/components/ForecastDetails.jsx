@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { forecastContext } from '../App';
 import {
   UilTemperature,
   UilTear,
@@ -10,6 +9,7 @@ import {
   UilArrowDown,
   UilClock,
 } from '@iconscout/react-unicons';
+import { forecastContext } from '../App';
 import {
   formatToLocalTime,
   iconUrlFromCode,
